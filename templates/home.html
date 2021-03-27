@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<style>
+    #customers {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #customers td,
+    #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #customers tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #customers tr:hover {
+        background-color: #ddd;
+    }
+
+    #customers th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #053d3f;
+        color: white;
+    }
+
+    .container {
+
+        max-width: 80%;
+    }
+</style>
+
+<body>
+    <h1>HOME</h1>
+
+    <div class="container">
+        <div class="tabEtudiant">
+     
+        </div>
+        {% block content %}
+        <form id="myform">
+            {% csrf_token %}
+            <label>nom</label>
+            <input type="text" name="nom" id="id_nom" value="ziad"><br>
+            <label>prenom</label>
+            <input type="text" name="prenom" id="id_prenom" value="fellah"><br>
+            <label>age</label>
+            <input type="number" name="age" id="id_age" value=15><br>
+            <button type="submit" id="ajouter"> Ajouter</button>
+        </form>
+        <div class="message">
+
+        </div>
+        {% endblock %}
+
+        {% block javascript %}
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: "ajax/affiche_tableau_etudiant/",
+                    type: "GET",
+                    data: {
+                        csrfmiddlewaretoken: "{{csrf_token}}"
+                    },
+                    dataType: "text",
+                    success: function (data) {
+                        $(".tabEtudiant").html(data);
+                    }
+                });
+
+                $(document).on('submit', '#myform', function (e) {
+                    e.preventDefault();
+                    let nom = $("#id_nom").val();
+                    let prenom = $("#id_prenom").val();
+                    let age = $("#id_age").val();
+                    $.ajax({
+                        url: "ajax/ajouter_etudiant0/",
+                        type: "POST",
+                        data: {
+                            csrfmiddlewaretoken: "{{csrf_token}}",
+                            nom: nom,
+                            prenom: prenom,
+                            age: age
+                        },
+                        dataType: "text",
+                        success: function (data) {
+                            $(".tabEtudiant").load("ajax/affiche_tableau_etudiant/");
+
+                        }
+                    });
+                });
+            });
+        </script>
+        {% endblock %}
+    </div>
+</body>
+
+</html>

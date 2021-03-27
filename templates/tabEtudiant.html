@@ -1,0 +1,20 @@
+{% if etudiant %}
+<table border="1" id="customers">
+    <thead>
+        <tr>
+            <th>nom</th>
+            <th>prenom</th>
+            <th>age</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in etudiant %}
+        <tr>
+            <td>{{i.nom}}</td>
+            <td>{{i.prenom}}</td>
+            <td>{{i.age_1}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
