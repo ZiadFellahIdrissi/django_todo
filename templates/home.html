@@ -168,10 +168,11 @@
                             id:id
                         },
                         success: function (data) {
-                            $(".infoEtudiant").html(data);
-                            $("#id_nom_modifier").val($("#info_nom").text());
-                            $("#id_prenom_modifier").val($("#info_prenom").text());
-                            $("#id_age_modifier").val($("#info_age").text());
+                            let dataUpdated = data[0].fields  // hna bache t3rafni kifache 3rafte hadi 
+                            // dire console.log(data) ou gha tfhame 
+                            $("#id_nom_modifier").val(dataUpdated.nom);
+                            $("#id_prenom_modifier").val(dataUpdated.prenom);
+                            $("#id_age_modifier").val(dataUpdated.age_1);
                         }
                     });
                 } );

@@ -8,4 +8,4 @@ class Etudiant(models.Model):
     age_1 = models.IntegerField()
 
     # def __str__(self):
-    #     return self.nom+' '+self.prenom,self.age_1
+    #     return self.nom+' '+self.prenom

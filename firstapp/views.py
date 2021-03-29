@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from firstapp.models import Etudiant
 from .models import Etudiant
+from django.core import serializers as ser
 import json
 # Create your views here.
 
@@ -19,9 +20,10 @@ def supprimer_etudiant(request):
     return HttpResponse()
 
 def donnee_etudiant(request):
-    return render(request,"etudiantInfo.html",{"etudiantInfo": Etudiant.objects.filter(id=request.POST['id'])}) 
-
-
+    if request.method == 'POST':
+        etudiant = Etudiant.objects.filter(id = request.POST['id'])
+        data = ser.serialize("json",etudiant)
+        return HttpResponse(data, content_type = "application/json")
 
 
 
