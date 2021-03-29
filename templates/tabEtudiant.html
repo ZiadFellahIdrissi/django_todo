@@ -6,6 +6,7 @@
             <th>prenom</th>
             <th>age</th>
             <th>supprimer</th>
+            <th>Modifier</th>
         </tr>
     </thead>
     <tbody>
@@ -15,6 +16,7 @@
             <td>{{i.prenom}}</td>
             <td >{{i.age_1}}</td>
             <td ><img class="imgDelete" id={{i.id}} src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Oxygen480-actions-edit-delete.svg/1200px-Oxygen480-actions-edit-delete.svg.png" width="50px" height="50px"></td>
+            <td ><img class="imgUpdate" id={{i.id}} src="data:image/png;base64,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" width="50px" height="50px"></td>
         </tr>
         {% endfor %}
     </tbody>

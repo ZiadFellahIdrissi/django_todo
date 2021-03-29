@@ -39,6 +39,29 @@
 
         max-width: 80%;
     }
+
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
 </style>
 
 <body>
@@ -47,6 +70,20 @@
     <div class="container">
         <div class="tabEtudiant">
      
+        </div>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <form id="myUpdateForm">
+                    <label>nom</label>
+                    <input type="text" name="updateName" id="id_nom_modifier" ><br>
+                    <label>prenom</label>
+                    <input type="text" name="updateLName" id="id_prenom_modifier" ><br>
+                    <label>age</label>
+                    <input type="number" name="updateAge" id="id_age_modifier" ><br>
+                    <button type="submit" id="Modifier"> Modifier</button>
+                </form>
+                <button id="Annuler"> Annuler</button>
+            </div>        
         </div>
         {% block content %}
         <form id="myform">
@@ -117,6 +154,41 @@
                         }
                     });
                 } );
+
+                $(document).on("click" , '.imgUpdate' ,function(){
+                    $(".modal").css("display","block");
+                    $("#Modifier").attr("id_etudiant",$(this).attr("id"));
+
+                } );
+
+                $( "#Annuler" ).click(function() {
+                    $(".modal").css("display","none");
+                });
+
+                $(document).on('submit', '#myUpdateForm', function (e) {
+                    e.preventDefault();
+                    let id=$("button").attr("id_etudiant");
+                    let nom = $("#id_nom_modifier").val();
+                    let prenom = $("#id_prenom_modifier").val();
+                    let age = $("#id_age_modifier").val();
+                    $.ajax({
+                        url: "ajax/modifier_etudiant/",
+                        type: "POST",
+                        data: {
+                            csrfmiddlewaretoken: "{{csrf_token}}",
+                            nom: nom,
+                            prenom: prenom,
+                            age: age,
+                            id:id
+                        },
+                        dataType: "text",
+                        success: function (data) {
+                            $(".tabEtudiant").load("ajax/affiche_tableau_etudiant/");
+
+                        }
+                    });
+                    $(".modal").css("display","none");
+                });
                 
 
 
