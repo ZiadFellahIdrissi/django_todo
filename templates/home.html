@@ -77,10 +77,9 @@
                     dataType: "text",
                     success: function (data) {
                         $(".tabEtudiant").html(data);
+                        deleteElement() 
                     }
                 });
-
-                
 
                 $(document).on('submit', '#myform', function (e) {
                     e.preventDefault();
@@ -104,27 +103,46 @@
                     });
                 });
 
-
-                function deleteElement() {
-                    let deleteImg=document.getElementsByClassName("imgDelete");
-                        for (let index = 0; index < deleteImg.length; index++) {
-                            deleteImg[index].addEventListener("click",()=>{
-                                let id =deleteImg[index].id;
-                                $.ajax({
-                                    url: "ajax/suprimer_etudiant/",
-                                    type: "POST",
-                                    data: {
-                                        csrfmiddlewaretoken: "{{csrf_token}}",
-                                        id:id,
-                                    },
-                                    success: function (data) {
-                                        $(".tabEtudiant").load("ajax/affiche_tableau_etudiant/");
-                                    }
-                                });
-                            });
+                $(document).on("click" , '.imgDelete' ,function(){
+                    let id = $(this).attr("id");
+                    $.ajax({
+                        url: "ajax/suprimer_etudiant/",
+                        type: "POST",
+                        data: {
+                            csrfmiddlewaretoken: "{{csrf_token}}",
+                            id:id
+                        },
+                        success: function (data) {
+                            $(".tabEtudiant").load("ajax/affiche_tableau_etudiant/");
                         }
-                }
+                    });
+                } );
+                
 
+
+                // function deleteElement() {
+                //     let deleteImg=$(".imgDelete");
+                //     console.log(deleteImg.length);
+                //     deleteImg.forEach(function(e) {
+                //         console.log("ziad");
+                //     });
+                        // for (let index = 0; index < deleteImg.length; index++) {
+                        //     deleteImg[index].addEventListener("click",()=>{
+                        //         let id =deleteImg[index].id;
+                        //         $.ajax({
+                        //             url: "ajax/suprimer_etudiant/",
+                        //             type: "POST",
+                        //             data: {
+                        //                 csrfmiddlewaretoken: "{{csrf_token}}",
+                        //                 id:id,
+                        //             },
+                        //             success: function (data) {
+                        //                 $(".tabEtudiant").load("ajax/affiche_tableau_etudiant/");
+                        //             }
+                        //         });
+                        //     });
+                        // }
+                // }
             });
             
         </script>
