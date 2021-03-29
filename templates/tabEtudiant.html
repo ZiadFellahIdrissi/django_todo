@@ -5,6 +5,7 @@
             <th>nom</th>
             <th>prenom</th>
             <th>age</th>
+            <th>supprimer</th>
         </tr>
     </thead>
     <tbody>
@@ -12,7 +13,8 @@
         <tr>
             <td>{{i.nom}}</td>
             <td>{{i.prenom}}</td>
-            <td>{{i.age_1}}</td>
+            <td >{{i.age_1}}</td>
+            <td ><img class="imgDelete" id={{i.id}} src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Oxygen480-actions-edit-delete.svg/1200px-Oxygen480-actions-edit-delete.svg.png" width="50px" height="50px"></td>
         </tr>
         {% endfor %}
     </tbody>

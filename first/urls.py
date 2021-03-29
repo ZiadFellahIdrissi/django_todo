@@ -22,4 +22,5 @@ urlpatterns = [
     path('',views.home,name="home"),
     path('ajax/affiche_tableau_etudiant/', views.affiche_tableau_etudiant, name="ajouter_etudiant0"),
     path('ajax/ajouter_etudiant0/', views.ajouter_etudinat, name="ajouter_etudiant0"),
+    path('ajax/suprimer_etudiant/',views.supprimer_etudiant),
 ]

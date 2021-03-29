@@ -11,6 +11,12 @@ def home(request):
 def affiche_tableau_etudiant(request):
     return render(request,"tabEtudiant.html",{"etudiant": Etudiant.objects.all()}) 
 
+def supprimer_etudiant(request):
+    if request.method == 'POST':
+        v_id =  request.POST['id'] 
+        Etudiant.objects.filter(id=v_id).delete()
+    return HttpResponse()
+
 def ajouter_etudinat(request):
     if request.method == 'POST':
         v_nom =  request.POST['nom'] 

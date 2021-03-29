@@ -43,7 +43,6 @@
 
 <body>
     <h1>HOME</h1>
-    <h2>TEST</h2>
 
     <div class="container">
         <div class="tabEtudiant">
@@ -81,6 +80,8 @@
                     }
                 });
 
+                
+
                 $(document).on('submit', '#myform', function (e) {
                     e.preventDefault();
                     let nom = $("#id_nom").val();
@@ -102,7 +103,30 @@
                         }
                     });
                 });
+
+
+                function deleteElement() {
+                    let deleteImg=document.getElementsByClassName("imgDelete");
+                        for (let index = 0; index < deleteImg.length; index++) {
+                            deleteImg[index].addEventListener("click",()=>{
+                                let id =deleteImg[index].id;
+                                $.ajax({
+                                    url: "ajax/suprimer_etudiant/",
+                                    type: "POST",
+                                    data: {
+                                        csrfmiddlewaretoken: "{{csrf_token}}",
+                                        id:id,
+                                    },
+                                    success: function (data) {
+                                        $(".tabEtudiant").load("ajax/affiche_tableau_etudiant/");
+                                    }
+                                });
+                            });
+                        }
+                }
+
             });
+            
         </script>
         {% endblock %}
     </div>
