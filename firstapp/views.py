@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from firstapp.models import Etudiant
 from .models import Etudiant
+import json
 # Create your views here.
 
 
@@ -16,6 +17,14 @@ def supprimer_etudiant(request):
         v_id =  request.POST['id'] 
         Etudiant.objects.filter(id=v_id).delete()
     return HttpResponse()
+
+def donnee_etudiant(request):
+    return render(request,"etudiantInfo.html",{"etudiantInfo": Etudiant.objects.filter(id=request.POST['id'])}) 
+
+
+
+
+
 
 def modifier_etudiant(request):
     if request.method == 'POST':

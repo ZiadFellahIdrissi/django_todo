@@ -66,8 +66,10 @@
 
 <body>
     <h1>HOME</h1>
-
     <div class="container">
+        <div class="infoEtudiant" style="display: none;">
+
+        </div>
         <div class="tabEtudiant">
      
         </div>
@@ -114,7 +116,6 @@
                     dataType: "text",
                     success: function (data) {
                         $(".tabEtudiant").html(data);
-                        deleteElement() 
                     }
                 });
 
@@ -156,9 +157,23 @@
                 } );
 
                 $(document).on("click" , '.imgUpdate' ,function(){
+                    let id  =$(this).attr("id");
                     $(".modal").css("display","block");
-                    $("#Modifier").attr("id_etudiant",$(this).attr("id"));
-
+                    $("#Modifier").attr("id_etudiant",id);
+                    $.ajax({
+                        url: "ajax/donnee_etudiant/",
+                        type: "POST",
+                        data: {
+                            csrfmiddlewaretoken: "{{csrf_token}}",
+                            id:id
+                        },
+                        success: function (data) {
+                            $(".infoEtudiant").html(data);
+                            $("#id_nom_modifier").val($("#info_nom").text());
+                            $("#id_prenom_modifier").val($("#info_prenom").text());
+                            $("#id_age_modifier").val($("#info_age").text());
+                        }
+                    });
                 } );
 
                 $( "#Annuler" ).click(function() {

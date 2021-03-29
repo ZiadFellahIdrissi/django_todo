@@ -1,0 +1,7 @@
+{% if etudiantInfo %}
+    {% for i in etudiantInfo %}
+        <p id="info_nom">{{i.nom}}</p>
+        <p id="info_prenom">{{i.prenom}}</p>
+        <p id="info_age">{{i.age_1}}</p>    
+    {% endfor %}     
+{% endif %}
