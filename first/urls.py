@@ -20,7 +20,7 @@ from firstapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name="home"),
-    path('ajax/affiche_tableau_etudiant/', views.affiche_tableau_etudiant, name="ajouter_etudiant0"),
+    path('ajax/affiche_tableau_etudiant/', views.affiche_tableau_etudiant, name="affiche_tableau_etudiant"),
     path('ajax/ajouter_etudiant0/', views.ajouter_etudinat, name="ajouter_etudiant0"),
     path('ajax/suprimer_etudiant/',views.supprimer_etudiant),
     path('ajax/modifier_etudiant/',views.modifier_etudiant),

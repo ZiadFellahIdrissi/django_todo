@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <title>Home</title>
 </head>
 <style>
@@ -40,179 +42,230 @@
         max-width: 80%;
     }
 
-    .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        padding-top: 100px; /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    }
-
-    /* Modal Content */
-    .modal-content {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-    }
 </style>
 
 <body>
     <h1>HOME</h1>
     <div class="container">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal_ajouter">
+            Ajouter etudiant
+        </button>
         <div class="infoEtudiant" style="display: none;">
 
         </div>
         <div class="tabEtudiant">
-     
+
         </div>
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <form id="myUpdateForm">
-                    <label>nom</label>
-                    <input type="text" name="updateName" id="id_nom_modifier" ><br>
-                    <label>prenom</label>
-                    <input type="text" name="updateLName" id="id_prenom_modifier" ><br>
-                    <label>age</label>
-                    <input type="number" name="updateAge" id="id_age_modifier" ><br>
-                    <button type="submit" id="Modifier"> Modifier</button>
-                </form>
-                <button id="Annuler"> Annuler</button>
-            </div>        
-        </div>
-        {% block content %}
-        <form id="myform">
-            {% csrf_token %}
-            <label>nom</label>
-            <input type="text" name="nom" id="id_nom" value="ziad"><br>
-            <label>prenom</label>
-            <input type="text" name="prenom" id="id_prenom" value="fellah"><br>
-            <label>age</label>
-            <input type="number" name="age" id="id_age" value=15><br>
-            <button type="submit" id="ajouter"> Ajouter</button>
-        </form>
+
         <div class="message">
 
         </div>
-        {% endblock %}
+    </div>
 
-        {% block javascript %}
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script>
-            $(document).ready(function () {
+
+    <!-- Modal -->
+    <div class="modal fade" id="Modal_ajouter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ajouter un etudiant</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="myform">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="nom" id="id_nom" placeholder="Nom"
+                                aria-label="Nom">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="prenom" id="id_prenom" placeholder="Nom"
+                                aria-label="Prenom">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" name="age" id="id_age" placeholder="Age"
+                                aria-label="Age">
+                        </div>
+                        <div class="msgreturn">
+
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" id="ajouter"> Ajouter</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="Modal_Modifier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modifier l'etudiant <span
+                            id="personeilookfor"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="myUpdateForm">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="updateName" id="id_nom_modifier"
+                                placeholder="Nom">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="updateLName" id="id_prenom_modifier"
+                                placeholder="Nom">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" name="updateAge" id="id_age_modifier"
+                                placeholder="Age">
+                        </div>
+                        <div class="msgreturnupdate">
+
+                        </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="id_etudiant">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" id="Modifier">Modifier</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% block javascript %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "ajax/affiche_tableau_etudiant/",
+                type: "GET",
+                data: {
+                    csrfmiddlewaretoken: "{{csrf_token}}"
+                },
+                dataType: "text",
+                success: function (data) {
+                    $(".tabEtudiant").html(data);
+                }
+            });
+
+            $(document).on('submit', '#myform', function (e) {
+                e.preventDefault();
+                let nom = $("#id_nom").val();
+                let prenom = $("#id_prenom").val();
+                let age = $("#id_age").val();
                 $.ajax({
-                    url: "ajax/affiche_tableau_etudiant/",
-                    type: "GET",
+                    url: "ajax/ajouter_etudiant0/",
+                    type: "POST",
                     data: {
-                        csrfmiddlewaretoken: "{{csrf_token}}"
+                        csrfmiddlewaretoken: "{{csrf_token}}",
+                        nom: nom,
+                        prenom: prenom,
+                        age: age
                     },
                     dataType: "text",
                     success: function (data) {
-                        $(".tabEtudiant").html(data);
+                        $(".tabEtudiant").load("ajax/affiche_tableau_etudiant/");
+                        $(".msgreturn").html("<div class=\"alert alert-success\" role=\"alert\"\>l'etudiant " + prenom + " est ajouté </div\> ");
+                        $("#id_nom").val("");
+                        $("#id_prenom").val("");
+                        $("#id_age").val("");
+
                     }
                 });
-
-                $(document).on('submit', '#myform', function (e) {
-                    e.preventDefault();
-                    let nom = $("#id_nom").val();
-                    let prenom = $("#id_prenom").val();
-                    let age = $("#id_age").val();
-                    $.ajax({
-                        url: "ajax/ajouter_etudiant0/",
-                        type: "POST",
-                        data: {
-                            csrfmiddlewaretoken: "{{csrf_token}}",
-                            nom: nom,
-                            prenom: prenom,
-                            age: age
-                        },
-                        dataType: "text",
-                        success: function (data) {
-                            $(".tabEtudiant").load("ajax/affiche_tableau_etudiant/");
-
-                        }
-                    });
-                });
-
-                $(document).on("click" , '.imgDelete' ,function(){
-                    let id = $(this).attr("id");
-                    $.ajax({
-                        url: "ajax/suprimer_etudiant/",
-                        type: "POST",
-                        data: {
-                            csrfmiddlewaretoken: "{{csrf_token}}",
-                            id:id
-                        },
-                        success: function (data) {
-                            $(".tabEtudiant").load("ajax/affiche_tableau_etudiant/");
-                        }
-                    });
-                } );
-
-                $(document).on("click" , '.imgUpdate' ,function(){
-                    let id  =$(this).attr("id");
-                    $(".modal").css("display","block");
-                    $("#Modifier").attr("id_etudiant",id);
-                    $.ajax({
-                        url: "ajax/donnee_etudiant/",
-                        type: "POST",
-                        data: {
-                            csrfmiddlewaretoken: "{{csrf_token}}",
-                            id:id
-                        },
-                        success: function (data) {
-                            let dataUpdated = data[0].fields  // hna bache t3rafni kifache 3rafte hadi 
-                            // dire console.log(data) ou gha tfhame 
-                            $("#id_nom_modifier").val(dataUpdated.nom);
-                            $("#id_prenom_modifier").val(dataUpdated.prenom);
-                            $("#id_age_modifier").val(dataUpdated.age_1);
-                        }
-                    });
-                } );
-
-                $( "#Annuler" ).click(function() {
-                    $(".modal").css("display","none");
-                });
-
-                $(document).on('submit', '#myUpdateForm', function (e) {
-                    e.preventDefault();
-                    let id=$("button").attr("id_etudiant");
-                    let nom = $("#id_nom_modifier").val();
-                    let prenom = $("#id_prenom_modifier").val();
-                    let age = $("#id_age_modifier").val();
-                    $.ajax({
-                        url: "ajax/modifier_etudiant/",
-                        type: "POST",
-                        data: {
-                            csrfmiddlewaretoken: "{{csrf_token}}",
-                            nom: nom,
-                            prenom: prenom,
-                            age: age,
-                            id:id
-                        },
-                        dataType: "text",
-                        success: function (data) {
-                            $(".tabEtudiant").load("ajax/affiche_tableau_etudiant/");
-
-                        }
-                    });
-                    $(".modal").css("display","none");
-                });
-                
-
-
             });
-            
-        </script>
-        {% endblock %}
-    </div>
+
+            $(document).on("click", '.imgDelete', function () {
+                let id = $(this).attr("id");
+                $.ajax({
+                    url: "ajax/suprimer_etudiant/",
+                    type: "POST",
+                    data: {
+                        csrfmiddlewaretoken: "{{csrf_token}}",
+                        id: id
+                    },
+                    success: function (data) {
+                        $(".tabEtudiant").load("ajax/affiche_tableau_etudiant/");
+                    }
+                });
+            });
+
+            $(document).on("click", '.imgUpdate', function () {
+                $(".msgreturnupdate").hide();
+                let id = $(this).attr("id");
+                $.ajax({
+                    url: "ajax/donnee_etudiant/",
+                    type: "POST",
+                    data: {
+                        csrfmiddlewaretoken: "{{csrf_token}}",
+                        id: id
+                    },
+                    success: function (data) {
+                        let dataUpdated = data[0].fields  // hna bache t3rafni kifache 3rafte hadi 
+                        // dire console.log(data) ou gha tfhame 
+                        $("#id_nom_modifier").val(dataUpdated.nom);
+                        $("#id_prenom_modifier").val(dataUpdated.prenom);
+                        $("#id_age_modifier").val(dataUpdated.age_1);
+                        $("#id_etudiant").val(data[0].pk);  // 7awel tfhame hna chno darte , 
+                        // ou ila mafhmatiche dire 3awtani console.log(data)
+                        $('#Modal_Modifier').modal('show');
+                    }
+                });
+            });
+
+
+            $(document).on('submit', '#myUpdateForm', function (e) {
+                e.preventDefault();
+               
+                let id = $("#id_etudiant").val();
+                let nom = $("#id_nom_modifier").val();
+                let prenom = $("#id_prenom_modifier").val();
+                let age = $("#id_age_modifier").val();
+                $.ajax({
+                    url: "ajax/modifier_etudiant/",
+                    type: "POST",
+                    data: {
+                        csrfmiddlewaretoken: "{{csrf_token}}",
+                        nom: nom,
+                        prenom: prenom,
+                        age: age,
+                        id: id
+                    },
+                    dataType: "text",
+                    success: function (data) {
+                        $(".msgreturnupdate").show();
+                        $(".tabEtudiant").load("ajax/affiche_tableau_etudiant/");
+                        $(".msgreturnupdate").html("<div class=\"alert alert-success\" role=\"alert\"\>l'etudiant " + prenom + " est updated </div\> ");
+                        setTimeout(function () { //hadi wa9ila machi chi blaan nadi ms ta nchoufe mane ba3de
+                            $('#Modal_Modifier').modal('hide');
+                        }, 1000);
+
+
+
+                    }
+                });
+                // $(".modal").css("display", "none");
+            });
+
+
+
+        });
+
+    </script>
+    {% endblock %}
+
 </body>
 
 </html>
